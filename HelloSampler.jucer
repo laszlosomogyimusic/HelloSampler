@@ -3,7 +3,8 @@
 <JUCERPROJECT id="FfXy1K" name="HelloSampler" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" bundleIdentifier="com.code-n-note.HelloSampler"
               pluginManufacturer="Code'n'Note" cppLanguageStandard="17" companyName="Code'n'Note"
-              companyWebsite="www.laszlosomogyimusic.com" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
+              companyWebsite="www.laszlosomogyimusic.com" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
+              defines="JUCE_MODAL_LOOPS_PERMITTED=1">
   <MAINGROUP id="KiSdZP" name="HelloSampler">
     <GROUP id="{178CCC6A-8C7F-080A-BEA7-FB7ED7D29870}" name="Source">
       <FILE id="kCwbfa" name="PluginProcessor.cpp" compile="1" resource="0"
