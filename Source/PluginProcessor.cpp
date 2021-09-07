@@ -31,7 +31,7 @@ HelloSamplerAudioProcessor::HelloSamplerAudioProcessor()
 
 HelloSamplerAudioProcessor::~HelloSamplerAudioProcessor()
 {
-    mFormatReader = nullptr;
+    delete mFormatReader;
 }
 
 //==============================================================================
@@ -181,6 +181,7 @@ void HelloSamplerAudioProcessor::loadFile()
         mFormatReader = mFormatManager.createReaderFor(file);
     }
 
+
     juce::BigInteger range;
     range.setRange(0, 128, true);
 
@@ -193,6 +194,13 @@ void HelloSamplerAudioProcessor::loadFile(const juce::String& path)
     mSampler.clearSounds();
     auto file = juce::File(path);
     mFormatReader = mFormatManager.createReaderFor(file);
+
+    auto sampleLength = static_cast<int>(mFormatReader->lengthInSamples);
+
+    mWaveForm.setSize(1, sampleLength);
+    mFormatReader->read(&mWaveForm, 0, sampleLength, 0, true, false);
+
+    auto buffer = mWaveForm.getReadPointer(0);
 
     juce::BigInteger range;
     range.setRange(0, 128, true);

@@ -32,8 +32,11 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     juce::TextButton mLoadButton{"Load"};
-        
-    HelloSamplerAudioProcessor& audioProcessor;
+    std::vector<float> mAudioPoints;
+    bool mShouldBePainting{ false };
+
+
+    HelloSamplerAudioProcessor& processor;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HelloSamplerAudioProcessorEditor)
 };

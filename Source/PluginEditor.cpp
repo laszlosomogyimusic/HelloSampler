@@ -11,17 +11,18 @@
 
 //==============================================================================
 HelloSamplerAudioProcessorEditor::HelloSamplerAudioProcessorEditor (HelloSamplerAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+    : AudioProcessorEditor (&p), processor (p)
 {
     //mLoadButton.onClick = [&]() { p.loadFile(); };
     //addAndMakeVisible(mLoadButton);
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (200, 200);
+    setSize (600, 200);
 }
 
 HelloSamplerAudioProcessorEditor::~HelloSamplerAudioProcessorEditor()
 {
+
 }
 
 //==============================================================================
@@ -36,17 +37,35 @@ void HelloSamplerAudioProcessorEditor::paint (juce::Graphics& g)
     g.fillAll(juce::Colours::black);
 
     g.setColour(juce::Colours::white);
-    g.setFont(15.0f);
 
-    if (audioProcessor.getNumSamplerSounds() > 0)
-    {
-        g.fillAll(juce::Colours::green);
-        g.drawText("Sound loaded", getWidth() / 2 - 50, getHeight() / 2 - 10, 100, 20, juce::Justification::centred);
 
-    }
-    else
+    if (mShouldBePainting)
     {
-        g.drawText("Load a sound", getWidth() / 2 - 50, getHeight() / 2 - 10, 100, 20, juce::Justification::centred);
+        juce::Path p;
+        mAudioPoints.clear();
+
+        auto waveForm = processor.getWaveForm();
+        auto ratio = waveForm.getNumSamples() / getWidth();
+        auto buffer = waveForm.getReadPointer(0);
+
+        //scale audio file to window on x axis
+        for (int sample = 0; sample < waveForm.getNumSamples(); sample += ratio)
+        {
+            mAudioPoints.push_back(buffer[sample]);
+        }
+
+        p.startNewSubPath(0, getHeight() / 2);
+
+        //scale on y axis
+        for (int sample = 0; sample < mAudioPoints.size(); ++sample)
+        {
+            auto point = juce::jmap<float>(mAudioPoints[sample], -1.0f, 1.0f, 200, 0);
+            p.lineTo(sample, point);
+        }
+
+        g.strokePath(p, juce::PathStrokeType{ 2 });
+
+        mShouldBePainting = false;
     }
 }
 
@@ -74,7 +93,8 @@ void HelloSamplerAudioProcessorEditor::filesDropped(const juce::StringArray& fil
     {
         if (isInterestedInFileDrag(file))
         {
-            audioProcessor.loadFile(file);
+            mShouldBePainting = true;
+            processor.loadFile(file);
         }
     }
     repaint();
