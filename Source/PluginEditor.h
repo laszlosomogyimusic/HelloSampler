@@ -35,6 +35,9 @@ private:
     std::vector<float> mAudioPoints;
     bool mShouldBePainting{ false };
 
+    juce::Slider mAttackSlider, mDecaySlider, mSustainSlider, mReleaseSlider;
+    juce::Label mAttackLabel, mDecayLabel, mSustainLabel, mReleaseLabel;
+
 
     HelloSamplerAudioProcessor& processor;
 
