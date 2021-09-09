@@ -139,6 +139,8 @@ void HelloSamplerAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
+
+    getADSRValue();
    
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
@@ -212,6 +214,11 @@ void HelloSamplerAudioProcessor::loadFile(const juce::String& path)
 int HelloSamplerAudioProcessor::getNumSamplerSounds()
 {
     return mSampler.getNumSounds();
+}
+
+void HelloSamplerAudioProcessor::getADSRValue()
+{
+    DBG("Attack: " << attack << " Decay: " << decay << " Sustain: " << sustain << " Release: " << release);
 }
 
 //==============================================================================
