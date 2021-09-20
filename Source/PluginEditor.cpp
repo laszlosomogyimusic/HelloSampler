@@ -13,8 +13,17 @@
 HelloSamplerAudioProcessorEditor::HelloSamplerAudioProcessorEditor (HelloSamplerAudioProcessor& p)
     : AudioProcessorEditor(&p), mWaveThumbnail{ p }, mADSR{ p }, processor(p)
 {
+    auto lsImage = juce::ImageCache::getFromMemory(BinaryData::LaszloSomogyiMusic_png, BinaryData::LaszloSomogyiMusic_pngSize);
+
+    if (!lsImage.isNull())
+        mImageComponent.setImage(lsImage, juce::RectanglePlacement::stretchToFit);
+    else
+        jassert(! lsImage.isNull());
+
+
     addAndMakeVisible(mWaveThumbnail);
     addAndMakeVisible(mADSR);
+    addAndMakeVisible(mImageComponent);
 
     startTimerHz(30);
     setSize (600, 400);
@@ -43,6 +52,7 @@ void HelloSamplerAudioProcessorEditor::resized()
 {
     mWaveThumbnail.setBoundsRelative(0.0f, 0.25f, 1.0f, 0.5f);
     mADSR.setBoundsRelative(0.0f, 0.75f, 1.0f, 0.25f);
+    mImageComponent.setBoundsRelative(0.0f, 0.0f, 0.25f, 0.25f);
 }
 
 void HelloSamplerAudioProcessorEditor::timerCallback()

@@ -21,6 +21,10 @@
             file="Source/ADSRComponent.cpp"/>
       <FILE id="CzkHty" name="ADSRComponent.h" compile="0" resource="0" file="Source/ADSRComponent.h"/>
     </GROUP>
+    <GROUP id="{8E23451B-C4AC-4ABC-240B-2A700562986E}" name="Resources">
+      <FILE id="YNYGe8" name="LaszloSomogyiMusic.png" compile="0" resource="1"
+            file="Resources/LaszloSomogyiMusic.png"/>
+    </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>
